@@ -103,11 +103,11 @@ class Fighter extends Sprite {
     this.draw()
     if (!this.dead) this.animateFrames()
 
-    // attack boxes
+    // Update attack box position
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y
 
-    // draw the attack box
+    // draw the attack box (commented out)
     // c.fillRect(
     //   this.attackBox.position.x,
     //   this.attackBox.position.y,
@@ -115,14 +115,27 @@ class Fighter extends Sprite {
     //   this.attackBox.height
     // )
 
+    // Update position with boundary checks
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
 
-    // gravity function
-    if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
+    // Boundary checks for x position (left and right boundaries)
+    if (this.position.x < 0) {
+      this.position.x = 0
+    } else if (this.position.x + this.width > canvas.width) {
+      this.position.x = canvas.width - this.width
+    }
+
+    // Boundary checks for y position (top and bottom boundaries)
+    if (this.position.y < 0) { // Added check to prevent infinite upward movement
+      this.position.y = 0
       this.velocity.y = 0
-      this.position.y = 330
-    } else this.velocity.y += gravity
+    } else if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) { // Bottom boundary
+      this.velocity.y = 0
+      this.position.y = canvas.height - this.height - 96
+    } else {
+      this.velocity.y += gravity
+    }
   }
 
   attack() {
