@@ -13,7 +13,7 @@ const background = new Sprite({
     x: 0,
     y: 0
   },
-  imageSrc: './img/aditya.jpg'
+  imageSrc: './img/aady.jpg'
 })
 
 const shop = new Sprite({
